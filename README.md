@@ -115,7 +115,7 @@ If you are still confused about this process, use this link as a resource: [Cont
 1. `yarn install` (Install dependencies from package manager)
 2. `yarn start` (Start frontend client)
 
-Navigate to [localhost:3000](localhost:3000) to see the frontend client for the project.
+Navigate to [localhost:3000](localhost:y3000) to see the frontend client for the project.
 
 ## Development Guide
 

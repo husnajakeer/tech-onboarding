@@ -13,6 +13,7 @@ const UserData: React.FC = () => {
   // element being the function to update the state.
 
   const [users, setUsers] = useState<any[]>([]);
+  const [filtered, setFiltered] = useState([]);
 
   // The useEffect hook basicaly runs the code inside of it when the component
   // mounts. This is useful for making API calls and other things that should
@@ -38,14 +39,29 @@ const UserData: React.FC = () => {
 
       // this is the endpoint you want to hit, but don't just hit it directly using axios, use the apiUrl() function to make the request
       const URL = 'https://users.api.hexlabs.org/users/hexlabs';
+      const newURL = apiUrl(Service.USERS, "/users/hexlabs");
+
+      const {data} = await axios.get(newURL);
+      
+      //setUsers(data);
+      
+      if (filtered) {
+        const filteredProfiles = data?.filter((profile: any) => profile.phoneNumber?.startsWith("470"));
+        setUsers(filteredProfiles);
+      } 
+      else {
+        setUsers(data);
+      }
+
 
       // uncomment the line below to test if you have successfully made the API call and retrieved the data. The below line takes
       // the raw request response and extracts the actual data that we need from it.
-      // setUsers(data?.data?.profiles);
+      //setUsers(data?.data?.profiles);
+
     };
     document.title = "Hexlabs Users"
     getUsers();
-  }, []);
+  }, [filtered]);
   // ^^ The empty array at the end of the useEffect hook tells React that the
   // hook should only run once when the component is mounted. If you want it to
   // run every time a variable changes, you can put that variable in the array
