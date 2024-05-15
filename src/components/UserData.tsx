@@ -66,18 +66,30 @@ const UserData: React.FC = () => {
   // hook should only run once when the component is mounted. If you want it to
   // run every time a variable changes, you can put that variable in the array
   // and it will run every time that variable changes.
-
-
   // TODO: Create a function that sorts the users array based on the first name of the users. Then, create a button that
   // calls this function and sorts the users alphabetically by first name. You can use the built in sort() function to do this.
 
+  const sortByFirstName = () => {
+    const sorted = [...users].sort((a, b) => {
+      const firstUser = a.name.first.toLowerCase();
+      const secondUser = b.name.first.toLowerCase();
+      if (firstUser < secondUser) {
+        return -1;
+      }
+      else if (firstUser > secondUser) {
+        return 1;
+      }
+      return 0;
+    }
+    )
+  }
 
   return (
     <>
       <Text fontSize="4xl">Hexlabs Users</Text>
       <Text fontSize="2xl">This is an example of a page that makes an API call to the Hexlabs API to get a list of users.</Text>
 
-
+      <button onClick={sortByFirstName}>Sorted Users</button>
       <SimpleGrid columns={[2, 3, 5]} spacing={6} padding={10}>
 
         {/* Here we are mapping every entry in our users array to a unique UserCard component, each with the unique respective
