@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiUrl, Service } from "@hex-labs/core";
-import { SimpleGrid, Text } from "@chakra-ui/react";
+import { Button, SimpleGrid, Text } from "@chakra-ui/react";
 import axios from "axios";
 import UserCard from "./UserCard";
 
@@ -38,7 +38,7 @@ const UserData: React.FC = () => {
       // Postman will be your best friend here, because it's better to test out the API calls in Postman before implementing them here.
 
       // this is the endpoint you want to hit, but don't just hit it directly using axios, use the apiUrl() function to make the request
-      const URL = 'https://users.api.hexlabs.org/users/hexlabs';
+      //const URL = 'https://users.api.hexlabs.org/users/hexlabs';
       const newURL = apiUrl(Service.USERS, "/users/hexlabs");
 
       const {data} = await axios.get(newURL);
@@ -52,7 +52,6 @@ const UserData: React.FC = () => {
       else {
         setUsers(data);
       }
-
 
       // uncomment the line below to test if you have successfully made the API call and retrieved the data. The below line takes
       // the raw request response and extracts the actual data that we need from it.
@@ -80,23 +79,24 @@ const UserData: React.FC = () => {
         return 1;
       }
       return 0;
-    }
-    )
-  }
+    });
+      setUsers(sorted);
+  };
 
   return (
     <>
       <Text fontSize="4xl">Hexlabs Users</Text>
       <Text fontSize="2xl">This is an example of a page that makes an API call to the Hexlabs API to get a list of users.</Text>
 
-      <button onClick={sortByFirstName}>Sorted Users</button>
+      <Button onClick={sortByFirstName}>Sorted Users</Button>
+
       <SimpleGrid columns={[2, 3, 5]} spacing={6} padding={10}>
 
         {/* Here we are mapping every entry in our users array to a unique UserCard component, each with the unique respective
         data of each unique user in our array. This is a really important concept that we use a lot so be sure to familiarize
         yourself with the syntax - compartmentalizing code makes your work so much more readable. */}
         { users.map((user) => (
-          <UserCard user={user} />
+          <UserCard user={user}/>
         ))}
 
       </SimpleGrid>

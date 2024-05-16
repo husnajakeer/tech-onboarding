@@ -1,10 +1,19 @@
 import {
+  Link, 
   Box,
   Flex,
   HStack,
   Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 
 type Props = {
   user: any;
@@ -25,29 +34,53 @@ type Props = {
 
 const UserCard: React.FC<Props> = (props: Props) => {
 
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => setIsOpen(false);
+
   return (
-    <Box
-    borderWidth="1px"
-    rounded="lg"
-    boxShadow="lg"
-    height="175px"
-    fontWeight="bold"
-    alignItems="center"
-    >
-      <Flex padding="2" flexDirection="column">
-        <HStack align="flex-end" justify="space-between">
-          <Text fontSize='xl'>{`${props.user.name.first} ${props.user.name.last}`}</Text>
-        </HStack>
-        <Text
-          fontSize="sm"
-          fontWeight="semibold"
-          justifyContent="justify"
-          mt="2"
-        >
-          {props.user.email}
-        </Text>
-      </Flex>
-    </Box>
+    <>
+      <Box
+        borderWidth="1px"
+        rounded="lg"
+        boxShadow="lg"
+        height="175px"
+        fontWeight="bold"
+        alignItems="center"
+        onClick={() => setIsOpen(true)}
+      >
+        <Flex padding="2" flexDirection="column">
+          <HStack align="flex-end" justify="space-between">
+            <Text fontSize='xl'>{`${props.user.name.first} ${props.user.name.last}`}</Text>
+          </HStack>
+          <Text
+            fontSize="sm"
+            fontWeight="semibold"
+            justifyContent="justify"
+            mt="2"
+          >
+            {props.user.email}
+          </Text>
+        </Flex>
+      </Box>
+      <Modal isOpen={isOpen} onClose={onClose} size = "lg">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>User Information</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Name: {`${props.user.name.first}`} {`${props.user.name.last}`}</Text>
+            <Text> <Link href={`mailto:${props.user.email}`} onClick= {() => setIsOpen(true)}>{props.user.email} </Link> </Text>
+            <Text>Phone Number: {`${props.user.phoneNumber}`}</Text>
+            <Text>User ID: {`${props.user.userId}`}</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" onClick={onClose}>
+              Close View
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      </>
   );
 };
 
