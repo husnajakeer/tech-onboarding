@@ -13,7 +13,8 @@ import {
   ModalFooter,
   Button
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { apiUrl, Service } from "@hex-labs/core";
+import React, { useEffect, useState } from "react";
 
 type Props = {
   user: any;
@@ -36,6 +37,8 @@ const UserCard: React.FC<Props> = (props: Props) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
+
+  const [appliedHexathons, setAppliedHexathons] = useState<any[]>([]);
 
   return (
     <>
@@ -72,10 +75,15 @@ const UserCard: React.FC<Props> = (props: Props) => {
             <Text> <Link href={`mailto:${props.user.email}`} onClick= {() => setIsOpen(true)}>{props.user.email} </Link> </Text>
             <Text>Phone Number: {`${props.user.phoneNumber}`}</Text>
             <Text>User ID: {`${props.user.userId}`}</Text>
+            <Text> Resume <Link href={apiUrl(Service.FILES, `/files/${props.user.id}/view`)}>View Resume</Link></Text> 
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" onClick={onClose}>
               Close View
+            </Button>
+            <div style ={{margin: '10px' }} />
+            <Button colorScheme="purple" onClick={onClose}>
+              View Hexathons
             </Button>
           </ModalFooter>
         </ModalContent>
