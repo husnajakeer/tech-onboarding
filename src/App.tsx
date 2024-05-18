@@ -6,7 +6,8 @@ import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
 import { useLogin, LoadingScreen, AuthProvider } from "@hex-labs/core";
-
+import { Header } from "@hex-labs/core";
+import { Footer } from "@hex-labs/core";
 import UserData from './components/UserData';
 
 // a little bee ascii art
@@ -47,14 +48,13 @@ export const App = () => {
   // Sets up the AuthProvider so that any part of the application can use the
   // useAuth hook to retrieve the user's login details.
   return (
-    <AuthProvider app={app}>
+    <><Header children={undefined} /><AuthProvider app={app}>
 
       {/* Setting up our React Router to route to all the different pages we may have */}
       <Routes>
         <Route path="/" element={<UserData />} />
       </Routes>
-
-    </AuthProvider>
+    </AuthProvider><Footer /></>
   );
 };
 
